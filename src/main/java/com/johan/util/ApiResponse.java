@@ -1,5 +1,7 @@
 package com.johan.util;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
@@ -29,11 +31,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ApiResponse<T> {
     private boolean success;
     private String message;
+    private List<String> errors;
     private T  data;
 
-    public ApiResponse(boolean success, String message, T data){
+    public ApiResponse(boolean success, String message, List<String> errors, T data){
         this.success = success;
         this.message = message;
+        this.errors = errors;
         this.data = data;
     }
 
@@ -51,6 +55,14 @@ public class ApiResponse<T> {
 
     public void setMessage(String message) { 
         this.message = message; 
+    }
+
+    public List<String> getErrors(){
+        return errors;
+    }
+
+    public void setErrors(List<String> errors){
+        this.errors = errors;
     }
 
     public T getData() { 
