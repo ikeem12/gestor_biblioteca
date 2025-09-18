@@ -19,9 +19,8 @@ import com.johan.infrastructure.config.JacksonConfig;
  * <ul>
  *   <li>Configuración de la URI base del servidor.</li>
  *   <li>Registrar paquetes de recursos (controllers/endpoints).</li>
- *   <li>Configurar validación de peticiones (validación por defecto o personalizada).</li>
+ *   <li>Configurar validación de peticiones (validación por defecto(jersey validation) o personalizada).</li>
  *   <li>Habilitar serialización/deserialización JSON con Jackson (soporte para fechas).</li>
- *  <li>Asociar un DataSource mediante un Factory, permitiendo soportar múltiples motores de base de datos.</li>
  * </ul>
  * 
  * <h4>Ejemplo de uso:</h4>
@@ -31,7 +30,6 @@ import com.johan.infrastructure.config.JacksonConfig;
  *       .withResourcePackages("com.johan.controller")
  *       .withDefaultValidation()
  *       .withJacksonMapper()
- *       .withDataSource("mysql")
  *       .build();
  * </pre>
  */
