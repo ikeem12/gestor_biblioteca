@@ -1,4 +1,4 @@
-package com.johan.config;
+package com.johan.infrastructure.config;
 
 /**
  * Enum que representa los entornos de ejecución de la aplicación.

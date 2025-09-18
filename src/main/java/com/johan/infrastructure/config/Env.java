@@ -1,4 +1,4 @@
-package com.johan.config;
+package com.johan.infrastructure.config;
 
 import com.johan.exception.app.UndefinedEnvironmentVariableException;
 
@@ -15,7 +15,7 @@ import io.github.cdimascio.dotenv.Dotenv;
  * <p>Responsabilidad principal:</p>
  * <ul>
  *   <li><b>get(String key):</b> Devuelve el valor de la variable de entorno indicada.
- *       Lanza {@link IllegalStateException} si la variable no está definida.</li>
+ *       Lanza {@link UndefinedEnvironmentVariableException} si la variable no está definida.</li>
  * </ul>
  */
 public class Env {

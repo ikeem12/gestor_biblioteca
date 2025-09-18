@@ -1,4 +1,4 @@
-package com.johan.config;
+package com.johan.infrastructure.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

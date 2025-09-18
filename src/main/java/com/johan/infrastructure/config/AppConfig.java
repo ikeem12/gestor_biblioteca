@@ -1,4 +1,4 @@
-package com.johan.config;
+package com.johan.infrastructure.config;
 
 import javax.sql.DataSource;
 
@@ -12,7 +12,8 @@ import com.zaxxer.hikari.HikariDataSource;
  *
  * <p>Sus responsabilidades principales son:</p>
  * <ul>
- *   <li>Cargar y validar las variables de entorno críticas al inicio.</li>
+ *   <li>Cargar y validar las variables de entorno críticas al inicio. si una variable critica esta vacia o null Lanza {@link 
+ *   MissingEnvironmentVariableException}.</li>
  *   <li>Configurar y exponer el pool de conexiones de base de datos (HikariCP).</li>
  *   <li>Proporcionar la URI base del servidor.</li>
  *   <li>Instanciar el {@link DataSource} correspondiente al motor de base de datos configurado.</li>
@@ -42,7 +43,7 @@ public class AppConfig {
 
     private static void checkCriticalEnv(String... keys) {
         for (String key : keys) {
-            String value = Env.get(key); // esto lanzará IllegalStateException si falta
+            String value = Env.get(key); 
             if (value == null || value.isBlank()) {
                 throw new MissingEnvironmentVariableException(key);
             }
