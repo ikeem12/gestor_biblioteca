@@ -2,17 +2,12 @@ package com.johan.infrastructure.server;
 
 import java.net.URI;
 
-import javax.sql.DataSource;
-
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.johan.infrastructure.db.DataSourceFactory;
+import com.johan.infrastructure.config.JacksonConfig;
 
 /***
  * <h4> Builder para configurar y crear un servidor HTTP con Grizzly y Jersey. </h4>
@@ -43,8 +38,10 @@ import com.johan.infrastructure.db.DataSourceFactory;
 public class ServerBuilder {
     private String baseUri;
     private ResourceConfig resourceConfig;
-    private ObjectMapper objectMapper;
-    private DataSource dataSource;
+
+    public ServerBuilder() {
+        this.resourceConfig = new ResourceConfig();
+    }
 
     public ServerBuilder withBaseUri(String baseUri){
         this.baseUri = baseUri;
@@ -52,7 +49,7 @@ public class ServerBuilder {
     }
 
     public ServerBuilder withResourcePackages(String... packages) {
-        this.resourceConfig = new ResourceConfig().packages(packages);
+        this.resourceConfig.packages(packages);
         return this;
     }
 
@@ -67,24 +64,11 @@ public class ServerBuilder {
     }
 
     public ServerBuilder withJacksonMapper() {
-        this.objectMapper = new ObjectMapper();
-        this.objectMapper.registerModule(new JavaTimeModule());
-        this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
         JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
-        provider.setMapper(this.objectMapper);
+        provider.setMapper(JacksonConfig.get());
 
         this.resourceConfig.register(provider);
         return this;
-    }
-
-    public ServerBuilder withDataSource(String dbType){
-        this.dataSource = DataSourceFactory.create(dbType);
-        return this;
-    }
-
-    public DataSource getDataSource(){
-        return this.dataSource;
     }
 
     public HttpServer build() {
