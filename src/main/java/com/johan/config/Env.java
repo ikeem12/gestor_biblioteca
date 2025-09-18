@@ -1,5 +1,7 @@
 package com.johan.config;
 
+import com.johan.exception.app.UndefinedEnvironmentVariableException;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 /**
@@ -24,7 +26,7 @@ public class Env {
     public static String get(String key){
         String value = dotenv.get(key);
         if (value == null) {
-            throw new IllegalStateException("Variable de entorno no definida: " + key);
+            throw new UndefinedEnvironmentVariableException(key);
         }
         return value;
     }
